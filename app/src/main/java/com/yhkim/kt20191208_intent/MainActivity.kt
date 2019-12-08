@@ -2,9 +2,8 @@ package com.yhkim.kt20191208_intent
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_edit_name.*
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -12,6 +11,7 @@ class MainActivity : AppCompatActivity() {
 //    1000이라는 숫자만 보면 어떤 의미로 쓰는 값인지 알기 어렵다.
 //    상수로 이름을 지어서 읽기 편하게 가공.
     val REQ_CODE_FOR_INPUT_NAME = 1000
+    val REQ_CODE_FOR_NiCKI_NAME = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity() {
 //            어떤 요청인지 구별해주는 숫자값을 적어 줘야 함.(1000)
 //            startActivityForResult(intent, 1000)
             startActivityForResult(intent, REQ_CODE_FOR_INPUT_NAME)
+        }
+
+        nickNameBtn.setOnClickListener {
+            val intent = Intent(this, EditNickNameActivity::class.java)
+            startActivityForResult(intent, REQ_CODE_FOR_NiCKI_NAME)
         }
     }
 
@@ -44,6 +49,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+        }
+
+        else if(requestCode == REQ_CODE_FOR_NiCKI_NAME) {
+            if(resultCode == Activity.RESULT_OK) {
+                if(data != null) {
+
+                    nickNameTxt.text = data.getStringExtra("name")
+                }
+            }
         }
     }
 }
