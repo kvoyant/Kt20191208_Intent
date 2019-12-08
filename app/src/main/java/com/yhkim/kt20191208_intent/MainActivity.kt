@@ -1,8 +1,10 @@
 package com.yhkim.kt20191208_intent
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_edit_name.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +25,25 @@ class MainActivity : AppCompatActivity() {
 //            어떤 요청인지 구별해주는 숫자값을 적어 줘야 함.(1000)
 //            startActivityForResult(intent, 1000)
             startActivityForResult(intent, REQ_CODE_FOR_INPUT_NAME)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+//        어떤 요청에 대한 결과를 가져온건지 확인
+        if(requestCode == REQ_CODE_FOR_INPUT_NAME) {
+
+//            확인버튼을 누른게 맞는지 확인
+            if(resultCode == Activity.RESULT_OK) {
+//                결과를 담아둔 Intent가 실제 할때만 실행됨.
+                if(data != null) {
+                    val inputName = data.getStringExtra("name")
+
+                    nameTxt.text = inputName
+                }
+            }
+
         }
     }
 }
